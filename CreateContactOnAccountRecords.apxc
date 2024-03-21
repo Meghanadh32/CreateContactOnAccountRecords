@@ -1,0 +1,24 @@
+Trigger CreateContactOnAccountRecords on Account (after insert)
+{
+List<Contact> ContactsToInsert = new List<Contact>();
+
+
+	for(Account acc: trigger.new)
+	{
+	Integer NoOfLocations = acc.Number_Of_Locations__c;
+	}
+
+	for(Integer i=0;i<NoOfLocations; i++)
+	{
+	Contact newContact = new Contact;
+	newContact.AccountId = acc.Id;
+	newcontact.LastName = 'Location' + (i+1);
+
+	ContactsToInsert.add(newcontact);
+	}
+
+	if(!ContactsToInsert.isEmpty)
+	{
+	insert ContactsToInsert;
+	}
+}
